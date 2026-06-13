@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人生であと何回出勤する？</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    max-width:700px;
+    margin:auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+input, select{
+    padding:8px;
+    box-sizing:border-box;
+    font-size: 16px; 
+}
+
+/* 単体の入力欄は幅100% */
+input[type="number"] {
+    width: 100%;
+}
+
+/* 【改善ポイント】生年月日セレクトボックスの並び用 */
+.date-select-container {
+    display: flex;
+    gap: 10px;
+}
+.date-select-container select {
+    flex: 1;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    cursor:pointer;
+}
+
+#error{
+    color:#d32f2f;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.progress{
+    width:100%;
+    height:30px;
+    background:#ddd;
+    border-radius:5px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.bar{
+    height:100%;
+    background:#4CAF50;
+    transition:width .5s;
+}
+
+.card{
+    background:#f5f5f5;
+    padding:15px;
+    margin-top:15px;
+    border-radius:8px;
+}
+
+.big{
+    font-size:2em;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>人生であと何回出勤する？</h1>
+
+<label>生年月日</label>
+<div class="date-select-container">
+    <select id="birthYear" onchange="updateDays()"></select>
+    <select id="birthMonth" onchange="updateDays()"></select>
+    <select id="birthDay"></select>
+</div>
+
+<label for="retireAge">定年年齢</label>
+<input
+    type="number"
+    id="retireAge"
+    value="65"
+    min="40"
+    max="100"
+>
+
+<label for="onedayHour">定時</label>
+<input
+    type="number"
+    id="onedayHour"
+    value="8"
+    min="0"
+    max="24"
+>
+
+<label for="holidays">年間休日数</label>
+<input
+    type="number"
+    id="holidays"
+    value="120"
+    min="0"
+    max="200"
+>
+
+<label for="paidLeave">年間有給取得日数</label>
+<input
+    type="number"
+    id="paidLeave"
+    value="10"
+    min="0"
+    max="100"
+>
+
+<label for="salaryCount">年間給与支給回数</label>
+<input
+    type="number"
+    id="salaryCount"
+    value="12"
+    min="1"
+    max="24"
+>
+
+<label for="bonusCount">年間ボーナス回数</label>
+<input
+    type="number"
+    id="bonusCount"
+    value="2"
+    min="0"
+    max="12"
+>
+<button onclick="calculate()">
+    計算
+</button>
+
+<div id="error"></div>
+
+<div id="result"></div>
+
+<script>
+// 【改善ポイント】ページ読み込み時に選択肢を自動生成する
+window.onload = function() {
+    const yearSelect = document.getElementById("birthYear");
+    const monthSelect = document.getElementById("birthMonth");
+    
+    const currentYear = new Date().getFullYear();
+    
+    // 年の選択肢（今年から100年前まで）をつくる
+    for (let i = currentYear; i >= currentYear - 100; i--) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i + "年";
+        if (i === 1988) opt.selected = true; // 初期値
+        yearSelect.appendChild(opt);
+    }
+    
+    // 月の選択肢をつくる
+    for (let i = 1; i <= 12; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i + "月";
+        if (i === 4) opt.selected = true; // 初期値
+        monthSelect.appendChild(opt);
+    }
+    
+    // 日の選択肢を初期化
+    updateDays();
+    
+    // 日の初期値（15日）を設定
+    document.getElementById("birthDay").value = 15;
+};
+
+// 【改善ポイント】年や月が変わった時、存在しない日（2月30日など）を消す処理
+function updateDays() {
+    const year = Number(document.getElementById("birthYear").value);
+    const month = Number(document.getElementById("birthMonth").value);
+    const daySelect = document.getElementById("birthDay");
+    
+    // 選択されていた日を覚えておく
+    const previousSelectedDay = Number(daySelect.value);
+    
+    // いったんリセット
+    daySelect.innerHTML = "";
+    
+    // 指定された月が何日まであるか計算（翌月の0日目を指定すると当月の末日が出る）
+    const lastDay = new Date(year, month, 0).getDate();
+    
+    for (let i = 1; i <= lastDay; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i + "日";
+        if (i === previousSelectedDay) opt.selected = true;
+        daySelect.appendChild(opt);
+    }
+}
+
+function showError(message){
+    document.getElementById("error").textContent = message;
+    document.getElementById("result").innerHTML = "";
+}
+
+function clearError(){
+    document.getElementById("error").textContent = "";
+}
+
+function calculate(){
+
+    clearError();
+
+    // 【改善ポイント】セレクトボックスの値から日付を作成
+    const year = Number(document.getElementById("birthYear").value);
+    const month = Number(document.getElementById("birthMonth").value) - 1; // JSの月は0始まり
+    const day = Number(document.getElementById("birthDay").value);
+    
+    const birthDate = new Date(year, month, day);
+    const retireAge = Number(document.getElementById("retireAge").value);
+    const onedayHour = Number(document.getElementById("onedayHour").value);
+    const holidays = Number(document.getElementById("holidays").value);
+    const paidLeave = Number(document.getElementById("paidLeave").value);
+    const salaryCount = Number(document.getElementById("salaryCount").value);
+    const bonusCount = Number(document.getElementById("bonusCount").value);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // 生年月日未来チェック
+    if(birthDate > today){
+        showError("未来の日付は入力できません");
+        return;
+    }
+
+    // 定年年齢
+    if(!Number.isInteger(retireAge) || retireAge < 40 || retireAge > 100){
+        showError("定年年齢は40～100で入力してください");
+        return;
+    }
+
+    // 定時
+    if(!Number.isInteger(onedayHour) || onedayHour < 0 || onedayHour > 24){
+        showError("定時は0～24で入力してください");
+        return;
+    }
+
+    // 年間休日
+    if(holidays < 0 || holidays > 200){
+        showError("年間休日数は0～200で入力してください");
+        return;
+    }
+
+    // 有給
+    if(paidLeave < 0 || paidLeave > 100){
+        showError("年間有給取得日数は0～100で入力してください");
+        return;
+    }
+
+    if(holidays + paidLeave >= 365){
+        showError("年間休日数と有給取得日数の合計が365日以上です");
+        return;
+    }
+
+    // 給料回数
+    if(salaryCount < 1 || salaryCount > 24){
+        showError("年間給与支給回数は1～24で入力してください");
+    }
+
+    // ボーナス回数
+    if(bonusCount < 0 || bonusCount > 12){
+        showError("年間ボーナス回数は0～12で入力してください");
+        return;
+    }
+
+    const retirementDate = new Date(
+        birthDate.getFullYear() + retireAge,
+        birthDate.getMonth(),
+        birthDate.getDate()
+    );
+
+    if(retirementDate <= today){
+        showError("既に定年日を過ぎています");
+        return;
+    }
+
+    const DAY = 1000 * 60 * 60 * 24;
+
+    const totalDays = (retirementDate - birthDate) / DAY;
+    const elapsedDays = (today - birthDate) / DAY;
+
+    const progress = Math.min(100, Math.max(0, (elapsedDays / totalDays) * 100));
+    const remainingDays = Math.ceil((retirementDate - today) / DAY);
+
+    // 有給込みの年間出勤日数
+    const workDaysPerYear = 365 - holidays - paidLeave;
+    const remainingWorkDays = Math.round(remainingDays * workDaysPerYear / 365);
+    const remainingYears = remainingDays / 365.25;
+
+    const salaryRemaining = Math.floor(remainingYears * salaryCount);
+    const bonusRemaining = Math.floor(remainingYears * bonusCount);
+
+    // 出勤日ベースで積み上げ
+    const totalSkillHours = remainingWorkDays * onedayHour;
+    const tenThousandHourCount = Math.floor(totalSkillHours / 10000);
+
+    document.getElementById("result").innerHTML = `
+        <div class="card">
+            <h2>定年までの進捗</h2>
+            <div class="progress">
+                <div class="bar" style="width:${progress}%"></div>
+            </div>
+            <div class="big">${progress.toFixed(1)}%</div>
+        </div>
+        <div class="card">
+            <h3>定年予定日</h3>
+            <div class="big">${retirementDate.toLocaleDateString("ja-JP")}</div>
+        </div>
+        <div class="card">
+            <h3>残り日数</h3>
+            <div class="big">${remainingDays.toLocaleString()}日</div>
+        </div>
+        <div class="card">
+            <h3>残り出勤日数</h3>
+            <div class="big">${remainingWorkDays.toLocaleString()}日</div>
+        </div>
+        <div class="card">
+            <h3>残り給料日</h3>
+            <div class="big">${salaryRemaining.toLocaleString()}回</div>
+        </div>
+        <div class="card">
+            <h3>残りボーナス</h3>
+            <div class="big">${bonusRemaining.toLocaleString()}回</div>
+        </div>
+        <div class="card">
+            <h3>定年までに積み上げられる勤務時間</h3>
+            <div class="big">${Math.floor(totalSkillHours).toLocaleString()}時間</div>
+        </div>
+        <div class="card">
+            <h3>1万時間の法則</h3>
+            <div class="big">${tenThousandHourCount.toLocaleString()}回分</div>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
