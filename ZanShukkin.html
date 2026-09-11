@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>あと何回出勤する？</title>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MWN06Z2785"></script>
 <script>
@@ -13,90 +15,278 @@
 
   gtag('config', 'G-MWN06Z2785');
 </script>
+
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
-    font-family:sans-serif;
+    margin:0;
+    padding:30px 15px 60px;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans JP",
+        sans-serif;
+    background:#f4f6f8;
+    color:#222;
+}
+
+.container{
     max-width:700px;
     margin:auto;
-    padding:20px;
+}
+
+/* =========================
+   ヘッダー
+========================= */
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header-sub{
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:3px;
+    color:#6b7280;
+    margin-bottom:8px;
 }
 
 h1{
-    text-align:center;
+    margin:0;
+    font-size:clamp(28px, 7vw, 40px);
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.header-description{
+    margin-top:12px;
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* =========================
+   入力カード
+========================= */
+
+.input-card{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.section-title{
+    margin:0 0 20px;
+    font-size:20px;
 }
 
 label{
     display:block;
-    margin-top:12px;
-    font-weight:bold;
+    margin-top:17px;
+    margin-bottom:7px;
+    font-size:14px;
+    font-weight:700;
+    color:#374151;
 }
 
-input, select{
-    padding:8px;
-    box-sizing:border-box;
-    font-size: 16px; 
+input,
+select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    background:#fff;
+    font-size:16px;
+    color:#222;
+    outline:none;
+    transition:
+        border-color .2s,
+        box-shadow .2s;
 }
 
-/* 単体の入力欄は幅100% */
-input[type="number"] {
-    width: 100%;
+input:focus,
+select:focus{
+    border-color:#6366f1;
+    box-shadow:0 0 0 3px rgba(99,102,241,.12);
 }
 
-/* 【改善ポイント】生年月日セレクトボックスの並び用 */
-.date-select-container {
-    display: flex;
-    gap: 10px;
+.date-select-container{
+    display:flex;
+    gap:10px;
 }
-.date-select-container select {
-    flex: 1;
+
+.date-select-container select{
+    flex:1;
 }
+
+/* =========================
+   計算ボタン
+========================= */
 
 button{
     display:block;
     width:100%;
-    margin-top:20px;
-    padding:14px 20px;
+    margin-top:25px;
+    padding:15px 20px;
+    border:0;
+    border-radius:10px;
+    background:#4f46e5;
+    color:white;
     font-size:18px;
-    font-weight:bold;
+    font-weight:700;
     cursor:pointer;
-    box-sizing:border-box;
+
+    box-shadow:0 5px 12px rgba(79,70,229,.25);
+
+    transition:
+        transform .15s,
+        box-shadow .15s,
+        background .15s;
 }
 
+button:hover{
+    background:#4338ca;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(79,70,229,.3);
+}
+
+button:active{
+    transform:translateY(0);
+    box-shadow:0 3px 8px rgba(79,70,229,.2);
+}
+
+/* =========================
+   エラー
+========================= */
+
 #error{
-    color:#d32f2f;
+    color:#dc2626;
     font-weight:bold;
+    margin-top:15px;
+    text-align:center;
+}
+
+/* =========================
+   結果
+========================= */
+
+#result{
+    margin-top:25px;
+}
+
+/* =========================
+   共通カード
+========================= */
+
+.card{
+    background:white;
+    padding:22px;
+    margin-top:15px;
+    border-radius:16px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+
+    opacity:0;
+    transform:translateY(15px);
+
+    animation:cardAppear .5s ease forwards;
+}
+
+.card h2,
+.card h3{
+    margin-top:0;
+}
+
+.card h2{
+    font-size:19px;
+}
+
+.card h3{
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:10px;
+}
+
+@keyframes cardAppear{
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =========================
+   メイン結果
+========================= */
+
+.main-result{
+    text-align:center;
+    padding:30px 20px;
+}
+
+.main-label{
+    font-size:14px;
+    font-weight:bold;
+    color:#6b7280;
+}
+
+.main-number{
+    margin-top:8px;
+    font-size:clamp(48px, 13vw, 72px);
+    line-height:1;
+    font-weight:800;
+    letter-spacing:-3px;
+    color:#111827;
+}
+
+.main-unit{
+    font-size:20px;
+    font-weight:bold;
+    margin-left:4px;
+}
+
+.main-comment{
+    margin-top:15px;
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* =========================
+   進捗
+========================= */
+
+.progress-wrapper{
+    position:relative;
+    padding-bottom:35px;
     margin-top:15px;
 }
 
 .progress{
     width:100%;
-    height:30px;
-    background:#ddd;
-    border-radius:5px;
+    height:24px;
+    background:#e5e7eb;
+    border-radius:20px;
     overflow:hidden;
-    margin-top:10px;
 }
 
 .bar{
+    width:0;
     height:100%;
-    background:#4CAF50;
-    transition:width .5s;
-}
+    background:linear-gradient(
+        90deg,
+        #6366f1,
+        #8b5cf6
+    );
+    border-radius:20px;
 
-.card{
-    background:#f5f5f5;
-    padding:15px;
-    margin-top:15px;
-    border-radius:8px;
-}
-
-.big{
-    font-size:2em;
-    font-weight:bold;
-}
-.progress-wrapper{
-    position:relative;
-    padding-bottom:35px;
+    transition:width 1.3s cubic-bezier(.22,1,.36,1);
 }
 
 .progress-age{
@@ -105,8 +295,8 @@ button{
     right:0;
     bottom:0;
     height:25px;
-    font-size:14px;
-    color:#555;
+    font-size:13px;
+    color:#6b7280;
 }
 
 .progress-age-start{
@@ -117,307 +307,973 @@ button{
 .progress-age-current{
     position:absolute;
     transform:translateX(-50%);
-    font-weight:bold;
+    font-weight:800;
+    color:#4f46e5;
+    white-space:nowrap;
+
+    transition:left 1.3s cubic-bezier(.22,1,.36,1);
 }
 
 .progress-age-end{
     position:absolute;
     right:0;
 }
+
+.progress-percent{
+    margin-top:15px;
+    text-align:center;
+    font-size:28px;
+    font-weight:800;
+}
+
+/* =========================
+   普通の大きな数字
+========================= */
+
+.big{
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+/* =========================
+   2列カード
+========================= */
+
+.result-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.result-grid .card{
+    margin-top:0;
+}
+
+/* =========================
+   アイコン
+========================= */
+
+.result-icon{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+/* =========================
+   フッター
+========================= */
+
+.footer{
+    margin-top:35px;
+    text-align:center;
+    font-size:12px;
+    color:#9ca3af;
+}
+
+/* =========================
+   スマホ
+========================= */
+
+@media(max-width:500px){
+
+    body{
+        padding:20px 12px 40px;
+    }
+
+    .input-card{
+        padding:20px 17px;
+    }
+
+    .date-select-container{
+        gap:6px;
+    }
+
+    .card{
+        padding:19px;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .result-grid .big{
+        font-size:27px;
+    }
+
+    .main-result{
+        padding:27px 15px;
+    }
+
+}
+
 </style>
-<meta name="google-site-verification" content="6MzU6DwWMe32M2dwroUc0SqgzRNWgJK4W-nS0xxTS2c" />
+
+<meta name="google-site-verification"
+      content="6MzU6DwWMe32M2dwroUc0SqgzRNwGJK4W-nS0xxTS2c" />
+
 </head>
+
 <body>
 
-<h1>人生であと何回出勤する？</h1>
+<div class="container">
 
-<label>生年月日</label>
-<div class="date-select-container">
-    <select id="birthYear" onchange="updateDays()"></select>
-    <select id="birthMonth" onchange="updateDays()"></select>
-    <select id="birthDay"></select>
+    <!-- =====================
+         ヘッダー
+    ====================== -->
+
+    <header class="header">
+        <h1>人生であと何回出勤する？</h1>
+    </header>
+
+
+    <!-- =====================
+         入力
+    ====================== -->
+
+    <div class="input-card">
+
+        <h2 class="section-title">
+            あなたの働き方
+        </h2>
+
+
+        <label>生年月日</label>
+
+        <div class="date-select-container">
+
+            <select id="birthYear"
+                    onchange="updateDays()">
+            </select>
+
+            <select id="birthMonth"
+                    onchange="updateDays()">
+            </select>
+
+            <select id="birthDay">
+            </select>
+
+        </div>
+
+
+        <label for="retireAge">
+            定年年齢
+        </label>
+
+        <input
+            type="number"
+            id="retireAge"
+            value="65"
+            min="40"
+            max="100"
+        >
+
+
+        <label for="onedayHour">
+            1日の勤務時間
+        </label>
+
+        <input
+            type="number"
+            id="onedayHour"
+            value="8"
+            min="0"
+            max="24"
+        >
+
+
+        <label for="holidays">
+            年間休日数
+        </label>
+
+        <input
+            type="number"
+            id="holidays"
+            value="120"
+            min="0"
+            max="200"
+        >
+
+
+        <label for="paidLeave">
+            年間有給取得日数
+        </label>
+
+        <input
+            type="number"
+            id="paidLeave"
+            value="10"
+            min="0"
+            max="100"
+        >
+
+
+        <label for="salaryCount">
+            年間給与支給回数
+        </label>
+
+        <input
+            type="number"
+            id="salaryCount"
+            value="12"
+            min="1"
+            max="24"
+        >
+
+
+        <label for="bonusCount">
+            年間ボーナス回数
+        </label>
+
+        <input
+            type="number"
+            id="bonusCount"
+            value="2"
+            min="0"
+            max="12"
+        >
+
+
+        <button onclick="calculate()">
+            あと何回出勤する？
+        </button>
+
+    </div>
+
+
+    <div id="error"></div>
+
+    <div id="result"></div>
+
+
+    <div class="footer">
+        ※休日・有給などをもとにした概算値です。
+    </div>
+
 </div>
 
-<label for="retireAge">定年年齢</label>
-<input
-    type="number"
-    id="retireAge"
-    value="65"
-    min="40"
-    max="100"
->
-
-<label for="onedayHour">定時</label>
-<input
-    type="number"
-    id="onedayHour"
-    value="8"
-    min="0"
-    max="24"
->
-
-<label for="holidays">年間休日数</label>
-<input
-    type="number"
-    id="holidays"
-    value="120"
-    min="0"
-    max="200"
->
-
-<label for="paidLeave">年間有給取得日数</label>
-<input
-    type="number"
-    id="paidLeave"
-    value="10"
-    min="0"
-    max="100"
->
-
-<label for="salaryCount">年間給与支給回数</label>
-<input
-    type="number"
-    id="salaryCount"
-    value="12"
-    min="1"
-    max="24"
->
-
-<label for="bonusCount">年間ボーナス回数</label>
-<input
-    type="number"
-    id="bonusCount"
-    value="2"
-    min="0"
-    max="12"
->
-<button onclick="calculate()">
-    計算
-</button>
-
-<div id="error"></div>
-
-<div id="result"></div>
 
 <script>
-// 【改善ポイント】ページ読み込み時に選択肢を自動生成する
-window.onload = function() {
-    const yearSelect = document.getElementById("birthYear");
-    const monthSelect = document.getElementById("birthMonth");
-    
-    const currentYear = new Date().getFullYear();
-    
-    // 年の選択肢（今年から100年前まで）をつくる
-    for (let i = currentYear; i >= currentYear - 100; i--) {
-        const opt = document.createElement("option");
+
+/* =========================
+   初期化
+========================= */
+
+window.onload = function(){
+
+    const yearSelect =
+        document.getElementById("birthYear");
+
+    const monthSelect =
+        document.getElementById("birthMonth");
+
+    const currentYear =
+        new Date().getFullYear();
+
+
+    /* 年 */
+
+    for(
+        let i = currentYear;
+        i >= currentYear - 100;
+        i--
+    ){
+
+        const opt =
+            document.createElement("option");
+
         opt.value = i;
         opt.textContent = i + "年";
-        if (i === 1988) opt.selected = true; // 初期値
+
+        if(i === 1988){
+            opt.selected = true;
+        }
+
         yearSelect.appendChild(opt);
+
     }
-    
-    // 月の選択肢をつくる
-    for (let i = 1; i <= 12; i++) {
-        const opt = document.createElement("option");
+
+
+    /* 月 */
+
+    for(let i = 1; i <= 12; i++){
+
+        const opt =
+            document.createElement("option");
+
         opt.value = i;
         opt.textContent = i + "月";
-        if (i === 4) opt.selected = true; // 初期値
+
+        if(i === 4){
+            opt.selected = true;
+        }
+
         monthSelect.appendChild(opt);
+
     }
-    
-    // 日の選択肢を初期化
+
+
     updateDays();
-    
-    // 日の初期値（15日）を設定
+
+
     document.getElementById("birthDay").value = 15;
+
 };
 
-// 【改善ポイント】年や月が変わった時、存在しない日（2月30日など）を消す処理
-function updateDays() {
-    const year = Number(document.getElementById("birthYear").value);
-    const month = Number(document.getElementById("birthMonth").value);
-    const daySelect = document.getElementById("birthDay");
-    
-    // 選択されていた日を覚えておく
-    const previousSelectedDay = Number(daySelect.value);
-    
-    // いったんリセット
+
+/* =========================
+   日付更新
+========================= */
+
+function updateDays(){
+
+    const year =
+        Number(
+            document.getElementById("birthYear").value
+        );
+
+    const month =
+        Number(
+            document.getElementById("birthMonth").value
+        );
+
+    const daySelect =
+        document.getElementById("birthDay");
+
+
+    const previousSelectedDay =
+        Number(daySelect.value);
+
+
     daySelect.innerHTML = "";
-    
-    // 指定された月が何日まであるか計算（翌月の0日目を指定すると当月の末日が出る）
-    const lastDay = new Date(year, month, 0).getDate();
-    
-    for (let i = 1; i <= lastDay; i++) {
-        const opt = document.createElement("option");
+
+
+    const lastDay =
+        new Date(year, month, 0).getDate();
+
+
+    for(let i = 1; i <= lastDay; i++){
+
+        const opt =
+            document.createElement("option");
+
         opt.value = i;
         opt.textContent = i + "日";
-        if (i === previousSelectedDay) opt.selected = true;
+
+        if(i === previousSelectedDay){
+            opt.selected = true;
+        }
+
         daySelect.appendChild(opt);
+
     }
+
 }
+
+
+/* =========================
+   エラー
+========================= */
 
 function showError(message){
-    document.getElementById("error").textContent = message;
-    document.getElementById("result").innerHTML = "";
+
+    document.getElementById("error")
+        .textContent = message;
+
+    document.getElementById("result")
+        .innerHTML = "";
+
 }
 
+
 function clearError(){
-    document.getElementById("error").textContent = "";
+
+    document.getElementById("error")
+        .textContent = "";
+
 }
+
+
+/* =========================
+   数字カウントアップ
+========================= */
+
+function animateNumber(
+    element,
+    target,
+    duration = 1000
+){
+
+    const start = 0;
+    const startTime = performance.now();
+
+
+    function update(currentTime){
+
+        const elapsed =
+            currentTime - startTime;
+
+        const progress =
+            Math.min(elapsed / duration, 1);
+
+
+        // easeOut
+        const eased =
+            1 - Math.pow(1 - progress, 3);
+
+
+        const value =
+            Math.floor(
+                start + (target - start) * eased
+            );
+
+
+        element.textContent =
+            value.toLocaleString();
+
+
+        if(progress < 1){
+
+            requestAnimationFrame(update);
+
+        }else{
+
+            element.textContent =
+                target.toLocaleString();
+
+        }
+
+    }
+
+
+    requestAnimationFrame(update);
+
+}
+
+
+/* =========================
+   計算
+========================= */
 
 function calculate(){
 
     clearError();
 
-    // 【改善ポイント】セレクトボックスの値から日付を作成
-    const year = Number(document.getElementById("birthYear").value);
-    const month = Number(document.getElementById("birthMonth").value) - 1; // JSの月は0始まり
-    const day = Number(document.getElementById("birthDay").value);
-    
-    const birthDate = new Date(year, month, day);
-    const retireAge = Number(document.getElementById("retireAge").value);
-    const onedayHour = Number(document.getElementById("onedayHour").value);
-    const holidays = Number(document.getElementById("holidays").value);
-    const paidLeave = Number(document.getElementById("paidLeave").value);
-    const salaryCount = Number(document.getElementById("salaryCount").value);
-    const bonusCount = Number(document.getElementById("bonusCount").value);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const year =
+        Number(
+            document.getElementById("birthYear").value
+        );
 
-    // 生年月日未来チェック
+    const month =
+        Number(
+            document.getElementById("birthMonth").value
+        ) - 1;
+
+    const day =
+        Number(
+            document.getElementById("birthDay").value
+        );
+
+
+    const birthDate =
+        new Date(year, month, day);
+
+
+    const retireAge =
+        Number(
+            document.getElementById("retireAge").value
+        );
+
+    const onedayHour =
+        Number(
+            document.getElementById("onedayHour").value
+        );
+
+    const holidays =
+        Number(
+            document.getElementById("holidays").value
+        );
+
+    const paidLeave =
+        Number(
+            document.getElementById("paidLeave").value
+        );
+
+    const salaryCount =
+        Number(
+            document.getElementById("salaryCount").value
+        );
+
+    const bonusCount =
+        Number(
+            document.getElementById("bonusCount").value
+        );
+
+
+    const today =
+        new Date();
+
+    today.setHours(0,0,0,0);
+
+
+    /* 生年月日 */
+
     if(birthDate > today){
-        showError("未来の日付は入力できません");
+
+        showError(
+            "未来の日付は入力できません"
+        );
+
         return;
+
     }
 
-    // 定年年齢
-    if(!Number.isInteger(retireAge) || retireAge < 40 || retireAge > 100){
-        showError("定年年齢は40～100で入力してください");
+
+    /* 定年 */
+
+    if(
+        !Number.isInteger(retireAge) ||
+        retireAge < 40 ||
+        retireAge > 100
+    ){
+
+        showError(
+            "定年年齢は40～100で入力してください"
+        );
+
         return;
+
     }
 
-    // 定時
-    if(!Number.isInteger(onedayHour) || onedayHour < 0 || onedayHour > 24){
-        showError("定時は0～24で入力してください");
+
+    /* 勤務時間 */
+
+    if(
+        !Number.isInteger(onedayHour) ||
+        onedayHour < 0 ||
+        onedayHour > 24
+    ){
+
+        showError(
+            "1日の勤務時間は0～24で入力してください"
+        );
+
         return;
+
     }
 
-    // 年間休日
-    if(holidays < 0 || holidays > 200){
-        showError("年間休日数は0～200で入力してください");
+
+    /* 休日 */
+
+    if(
+        holidays < 0 ||
+        holidays > 200
+    ){
+
+        showError(
+            "年間休日数は0～200で入力してください"
+        );
+
         return;
+
     }
 
-    // 有給
-    if(paidLeave < 0 || paidLeave > 100){
-        showError("年間有給取得日数は0～100で入力してください");
+
+    /* 有給 */
+
+    if(
+        paidLeave < 0 ||
+        paidLeave > 100
+    ){
+
+        showError(
+            "年間有給取得日数は0～100で入力してください"
+        );
+
         return;
+
     }
 
-    if(holidays + paidLeave >= 365){
-        showError("年間休日数と有給取得日数の合計が365日以上です");
+
+    if(
+        holidays + paidLeave >= 365
+    ){
+
+        showError(
+            "年間休日数と有給取得日数の合計が365日以上です"
+        );
+
         return;
+
     }
 
-    // 給料回数
-    if(salaryCount < 1 || salaryCount > 24){
-        showError("年間給与支給回数は1～24で入力してください");
-    }
 
-    // ボーナス回数
-    if(bonusCount < 0 || bonusCount > 12){
-        showError("年間ボーナス回数は0～12で入力してください");
+    /* 給料 */
+
+    if(
+        salaryCount < 1 ||
+        salaryCount > 24
+    ){
+
+        showError(
+            "年間給与支給回数は1～24回で入力してください"
+        );
+
         return;
+
     }
 
-    const retirementDate = new Date(
-        birthDate.getFullYear() + retireAge,
-        birthDate.getMonth(),
-        birthDate.getDate()
-    );
+
+    /* ボーナス */
+
+    if(
+        bonusCount < 0 ||
+        bonusCount > 12
+    ){
+
+        showError(
+            "年間ボーナス回数は0～12回で入力してください"
+        );
+
+        return;
+
+    }
+
+
+    /* 定年日 */
+
+    const retirementDate =
+        new Date(
+            birthDate.getFullYear() + retireAge,
+            birthDate.getMonth(),
+            birthDate.getDate()
+        );
+
 
     if(retirementDate <= today){
-        showError("既に定年日を過ぎています");
+
+        showError(
+            "既に定年日を過ぎています"
+        );
+
         return;
+
     }
 
-    const DAY = 1000 * 60 * 60 * 24;
 
-    const totalDays = (retirementDate - birthDate) / DAY;
-    const elapsedDays = (today - birthDate) / DAY;
+    const DAY =
+        1000 * 60 * 60 * 24;
 
-    const progress = Math.min(100, Math.max(0, (elapsedDays / totalDays) * 100));
-    const remainingDays = Math.ceil((retirementDate - today) / DAY);
 
-    // 有給込みの年間出勤日数
-    const workDaysPerYear = 365 - holidays - paidLeave;
-    const remainingWorkDays = Math.round(remainingDays * workDaysPerYear / 365);
-    const remainingYears = remainingDays / 365.25;
+    const totalDays =
+        (retirementDate - birthDate) / DAY;
 
-    const salaryRemaining = Math.floor(remainingYears * salaryCount);
-    const bonusRemaining = Math.floor(remainingYears * bonusCount);
 
-    // 出勤日ベースで積み上げ
-    const totalSkillHours = remainingWorkDays * onedayHour;
-    const tenThousandHourCount = Math.floor(totalSkillHours / 10000);
+    const elapsedDays =
+        (today - birthDate) / DAY;
+
+
+    const progress =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                (elapsedDays / totalDays) * 100
+            )
+        );
+
+
+    const remainingDays =
+        Math.ceil(
+            (retirementDate - today) / DAY
+        );
+
+
+    /* 現在年齢 */
+
+    const currentAge =
+        (today - birthDate) /
+        (DAY * 365.2425);
+
+
+    /* 年間出勤日数 */
+
+    const workDaysPerYear =
+        365 - holidays - paidLeave;
+
+
+    const remainingWorkDays =
+        Math.round(
+            remainingDays *
+            workDaysPerYear /
+            365
+        );
+
+
+    const remainingYears =
+        remainingDays / 365.25;
+
+
+    const salaryRemaining =
+        Math.floor(
+            remainingYears * salaryCount
+        );
+
+
+    const bonusRemaining =
+        Math.floor(
+            remainingYears * bonusCount
+        );
+
+
+    const totalSkillHours =
+        remainingWorkDays * onedayHour;
+
+
+    const tenThousandHourCount =
+        Math.floor(
+            totalSkillHours / 10000
+        );
+
+
+    /* =========================
+       結果HTML
+    ========================= */
 
     document.getElementById("result").innerHTML = `
-        <div class="card">
-            <h2>定年までの進捗</h2>
 
-            <div class="progress-wrapper">
-                <div class="progress">
-                    <div class="bar" style="width:${progress}%"></div>
-                </div>
+        <!-- メイン結果 -->
 
-                <div class="progress-age">
-                    <span class="progress-age-start">0歳</span>
+        <div class="card main-result">
 
-                    <span
-                        class="progress-age-current"
-                        style="left:${progress}%"
-                    >
-                        ${((today - birthDate) / (1000 * 60 * 60 * 24 * 365.2425)).toFixed(1)}歳
-                    </span>
-
-                    <span class="progress-age-end">${retireAge}歳</span>
-                </div>
+            <div class="main-label">
+                あなたが定年までに出勤する回数
             </div>
 
-            <div class="big">${progress.toFixed(1)}%</div>
+            <div>
+                <span
+                    id="workDaysNumber"
+                    class="main-number"
+                >0</span>
+
+                <span class="main-unit">
+                    回
+                </span>
+            </div>
+
+            <div class="main-comment">
+                これから、これだけ会社に行きます。
+            </div>
+
         </div>
+
+
+        <!-- 進捗 -->
+
         <div class="card">
-            <h3>定年予定日</h3>
-            <div class="big">${retirementDate.toLocaleDateString("ja-JP")}</div>
+
+            <h2>
+                定年までの進捗
+            </h2>
+
+            <div class="progress-wrapper">
+
+                <div class="progress">
+
+                    <div
+                        id="progressBar"
+                        class="bar"
+                    ></div>
+
+                </div>
+
+
+                <div class="progress-age">
+
+                    <span class="progress-age-start">
+                        0歳
+                    </span>
+
+                    <span
+                        id="currentAge"
+                        class="progress-age-current"
+                        style="left:0%"
+                    >
+                        ${currentAge.toFixed(1)}歳
+                    </span>
+
+                    <span class="progress-age-end">
+                        ${retireAge}歳
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="progress-percent">
+                ${progress.toFixed(1)}%
+            </div>
+
         </div>
+
+
+        <!-- 定年 -->
+
         <div class="card">
-            <h3>残り日数</h3>
-            <div class="big">${remainingDays.toLocaleString()}日</div>
+
+            <h3>
+                定年予定日
+            </h3>
+
+            <div class="big">
+                ${retirementDate.toLocaleDateString("ja-JP")}
+            </div>
+
         </div>
+
+
+        <!-- 残り日数 -->
+
         <div class="card">
-            <h3>残り出勤日数</h3>
-            <div class="big">${remainingWorkDays.toLocaleString()}日</div>
+
+            <h3>
+                残り日数
+            </h3>
+
+            <div class="big">
+                ${remainingDays.toLocaleString()}日
+            </div>
+
         </div>
-        <div class="card">
-            <h3>残り給料日</h3>
-            <div class="big">${salaryRemaining.toLocaleString()}回</div>
+
+
+        <!-- その他 -->
+
+        <div class="result-grid">
+
+            <div class="card">
+
+                <div class="result-icon">
+                    💰
+                </div>
+
+                <h3>
+                    残り給料日
+                </h3>
+
+                <div class="big">
+                    ${salaryRemaining.toLocaleString()}回
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="result-icon">
+                    🎁
+                </div>
+
+                <h3>
+                    残りボーナス
+                </h3>
+
+                <div class="big">
+                    ${bonusRemaining.toLocaleString()}回
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="result-icon">
+                    ⏰
+                </div>
+
+                <h3>
+                    残り勤務時間
+                </h3>
+
+                <div class="big">
+                    ${Math.floor(totalSkillHours).toLocaleString()}時間
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="result-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    1万時間の法則
+                </h3>
+
+                <div class="big">
+                    ${tenThousandHourCount.toLocaleString()}回分
+                </div>
+
+            </div>
+
         </div>
-        <div class="card">
-            <h3>残りボーナス</h3>
-            <div class="big">${bonusRemaining.toLocaleString()}回</div>
-        </div>
-        <div class="card">
-            <h3>定年までに積み上げられる勤務時間</h3>
-            <div class="big">${Math.floor(totalSkillHours).toLocaleString()}時間</div>
-        </div>
-        <div class="card">
-            <h3>1万時間の法則</h3>
-            <div class="big">${tenThousandHourCount.toLocaleString()}回分</div>
-        </div>
+
     `;
+
+
+    /* =========================
+       アニメーション開始
+    ========================= */
+
+
+    /* 出勤回数 */
+
+    setTimeout(() => {
+
+        animateNumber(
+            document.getElementById("workDaysNumber"),
+            remainingWorkDays,
+            1200
+        );
+
+    }, 200);
+
+
+    /* 進捗バー */
+
+    setTimeout(() => {
+
+        document.getElementById("progressBar")
+            .style.width = progress + "%";
+
+        document.getElementById("currentAge")
+            .style.left = progress + "%";
+
+    }, 300);
+
+
+    /* カードを順番に表示 */
+
+    const cards =
+        document.querySelectorAll(
+            "#result .card"
+        );
+
+    cards.forEach((card, index) => {
+
+        card.style.animationDelay =
+            (index * 80) + "ms";
+
+    });
+
 }
+
 </script>
 
 </body>
 </html>
+
