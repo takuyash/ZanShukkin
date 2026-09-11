@@ -94,6 +94,36 @@ button{
     font-size:2em;
     font-weight:bold;
 }
+.progress-wrapper{
+    position:relative;
+    padding-bottom:35px;
+}
+
+.progress-age{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:25px;
+    font-size:14px;
+    color:#555;
+}
+
+.progress-age-start{
+    position:absolute;
+    left:0;
+}
+
+.progress-age-current{
+    position:absolute;
+    transform:translateX(-50%);
+    font-weight:bold;
+}
+
+.progress-age-end{
+    position:absolute;
+    right:0;
+}
 </style>
 <meta name="google-site-verification" content="6MzU6DwWMe32M2dwroUc0SqgzRNWgJK4W-nS0xxTS2c" />
 </head>
@@ -335,9 +365,26 @@ function calculate(){
     document.getElementById("result").innerHTML = `
         <div class="card">
             <h2>定年までの進捗</h2>
-            <div class="progress">
-                <div class="bar" style="width:${progress}%"></div>
+
+            <div class="progress-wrapper">
+                <div class="progress">
+                    <div class="bar" style="width:${progress}%"></div>
+                </div>
+
+                <div class="progress-age">
+                    <span class="progress-age-start">0歳</span>
+
+                    <span
+                        class="progress-age-current"
+                        style="left:${progress}%"
+                    >
+                        ${((today - birthDate) / (1000 * 60 * 60 * 24 * 365.2425)).toFixed(1)}歳
+                    </span>
+
+                    <span class="progress-age-end">${retireAge}歳</span>
+                </div>
             </div>
+
             <div class="big">${progress.toFixed(1)}%</div>
         </div>
         <div class="card">
